@@ -1,0 +1,28 @@
+version: '3.1'
+
+networks:
+  mongodb_network:
+    driver: bridge
+
+services:
+
+  mongo:
+    image: mongo:6.0.1
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadm
+      MONGO_INITDB_ROOT_PASSWORD: Mudar@123456
+    networks:
+      -  mongodb_network
+
+  mongo-express:
+    image: mongo-express:0.49
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: mongoadm
+      ME_CONFIG_MONGODB_ADMINPASSWORD: Mudar@123456
+      ME_CONFIG_MONGODB_URL: mongodb://mongoadm:example@mongo:27017/
+    networks:
+       -  mongodb_network  
